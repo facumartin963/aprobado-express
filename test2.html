@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Stripe - Diagnóstico</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .test-button {
+            background: #667eea;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        .log {
+            background: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: left;
+            font-family: monospace;
+            font-size: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-card">
+        <h1>🔧 Diagnóstico Stripe</h1>
+        <p>Test minimalista para identificar el problema exacto</p>
+        
+        <button class="test-button" onclick="testStripeKey()">
+            1️⃣ Test Stripe Key
+        </button>
+        
+        <button class="test-button" onclick="testPriceID()">
+            2️⃣ Test Price ID
+        </button>
+        
+        <button class="test-button" onclick="testCheckout()">
+            3️⃣ Test Checkout
+        </button>
+        
+        <button class="test-button" onclick="clearLog()">
+            🗑️ Limpiar Log
+        </button>
+        
+        <div id="log" class="log">
+            <strong>📋 Log de diagnóstico:</strong><br>
+            Haz clic en los botones para probar cada componente...<br><br>
+        </div>
+    </div>
+
+    <script>
+        // Definir la key explícitamente
+        const STRIPE_PUBLIC_KEY = 'pk_live_51Rqf4z0onb4SjYDIHfyAJJNbUK7xEgWIP6NsZnAPtv7HY6HvhsI8M08bOexKvMY5wacjTcVFJHf6MowEZkF3gKI2001CPmCSRf';
+        const priceId = 'price_1RtOvw0onb4SjYDIbMYA68qY';
+        
+        // Inicializar Stripe correctamente
+        let stripe;
+        
+        function initStripe() {
+            try {
+                stripe = Stripe(STRIPE_PUBLIC_KEY);
+                log(`✅ Stripe initialized with key: ${STRIPE_PUBLIC_KEY.substring(0, 25)}...`);
+                return true;
+            } catch (error) {
+                log(`❌ Error initializing Stripe: ${error.message}`);
+                return false;
+            }
+        }
+        
+        function log(message) {
+            const logDiv = document.getElementById('log');
+            const timestamp = new Date().toLocaleTimeString();
+            logDiv.innerHTML += `[${timestamp}] ${message}<br>`;
+            logDiv.scrollTop = logDiv.scrollHeight;
+            console.log(message);
+        }
+        
+        function clearLog() {
+            document.getElementById('log').innerHTML = '<strong>📋 Log de diagnóstico:</strong><br>';
+        }
+        
+        function testStripeKey() {
+            log('🔑 Testing Stripe Key...');
+            
+            if (!stripe) {
+                log('⚠️ Stripe not initialized, attempting to initialize...');
+                if (!initStripe()) {
+                    return;
+                }
+            }
+            
+            log(`Key: ${STRIPE_PUBLIC_KEY.substring(0, 25)}...`);
+            log(`Key length: ${STRIPE_PUBLIC_KEY.length} characters`);
+            log(`Key starts with: ${STRIPE_PUBLIC_KEY.substring(0, 7)}`);
+            
+            if (STRIPE_PUBLIC_KEY.startsWith('pk_live_')) {
+                log('✅ This is a LIVE key');
+            } else if (STRIPE_PUBLIC_KEY.startsWith('pk_test_')) {
+                log('⚠️ This is a TEST key');
+            } else {
+                log('❌ Invalid key format');
+            }
+            
+            if (stripe) {
+                log('✅ Stripe object exists and is ready');
+            } else {
+                log('❌ Stripe object not available');
+            }
+        }
+        
+        async function testPriceID() {
+            log('💰 Testing Price ID...');
+            log(`Price ID: ${priceId}`);
+            log(`Price ID length: ${priceId.length} characters`);
+            log(`Price ID format: ${priceId.startsWith('price_') ? 'CORRECT' : 'INCORRECT'}`);
+        }
+        
+        async function testCheckout() {
+            log('🛒 Testing Stripe Checkout...');
+            
+            if (!stripe) {
+                log('❌ Stripe not initialized, cannot proceed');
+                return;
+            }
+            
+            log(`Current URL: ${window.location.href}`);
+            log(`Success URL would be: ${window.location.href}?success=true`);
+            log(`Cancel URL would be: ${window.location.href}`);
+            
+            try {
+                const sessionConfig = {
+                    lineItems: [{
+                        price: priceId,
+                        quantity: 1,
+                    }],
+                    mode: 'payment',
+                    successUrl: window.location.href + '?success=true',
+                    cancelUrl: window.location.href,
+                };
+                
+                log('📦 Session config created successfully');
+                log('🚀 Attempting redirectToCheckout...');
+                
+                const result = await stripe.redirectToCheckout(sessionConfig);
+                
+                if (result.error) {
+                    log(`❌ Stripe Error Type: ${result.error.type}`);
+                    log(`❌ Stripe Error Code: ${result.error.code}`);
+                    log(`❌ Stripe Error Message: ${result.error.message}`);
+                    
+                    // Análisis específico del error
+                    if (result.error.type === 'invalid_request_error') {
+                        log('🔍 Analysis: This is likely a configuration issue');
+                        if (result.error.message.includes('domain')) {
+                            log('🔍 Likely cause: Domain not authorized in Stripe dashboard');
+                        }
+                        if (result.error.message.includes('price')) {
+                            log('🔍 Likely cause: Price ID not found or inactive');
+                        }
+                    }
+                } else {
+                    log('✅ Checkout initiated successfully - should redirect now');
+                }
+                
+            } catch (jsError) {
+                log(`💥 JavaScript Error: ${jsError.message}`);
+                log(`💥 Error stack: ${jsError.stack}`);
+            }
+        }
+        
+        // Initialize Stripe on page load
+        window.addEventListener('load', () => {
+            log('🚀 Página cargada - iniciando diagnósticos automáticos...');
+            initStripe();
+            testStripeKey();
+        });
+    </script>
+</body>
+</html>

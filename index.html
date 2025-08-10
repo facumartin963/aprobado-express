@@ -403,11 +403,11 @@
             .hero h1 {
                 font-size: 2.5rem;
             }
-
+            
             .answers-grid {
                 grid-template-columns: 1fr;
             }
-
+            
             .nav-links {
                 display: none;
             }
@@ -479,12 +479,12 @@
         <div class="hero-content fade-in-up">
             <h1>Aprueba tu Examen de Conducir al Primer Intento</h1>
             <p>El simulador más avanzado de España con preguntas oficiales, explicaciones detalladas y sistema de aprendizaje gamificado.</p>
-
+            
             <div class="score-display">
                 <div class="score-number" id="userScore">0</div>
                 <div class="score-label">Preguntas Correctas</div>
             </div>
-
+            
             <a href="#simulator" class="cta-button">Empezar Gratis</a>
             <button class="cta-button cta-secondary" onclick="showPremium()">Ver Premium €24.99</button>
         </div>
@@ -493,7 +493,7 @@
     <!-- Simulator Section -->
     <section class="simulator" id="simulator">
         <h2>Simulador Interactivo</h2>
-
+        
         <div class="simulator-container glass">
             <div class="progress-container">
                 <div class="progress-bar">
@@ -508,7 +508,7 @@
                 <div class="question-text" id="questionText">
                     ¿Qué significa esta señal circular con borde rojo y fondo blanco con una bicicleta?
                 </div>
-
+                
                 <div class="answers-grid" id="answersGrid">
                     <div class="answer-option" onclick="selectAnswer(0)">
                         Prohibido el paso a bicicletas
@@ -523,7 +523,7 @@
                         Zona de bicicletas
                     </div>
                 </div>
-
+                
                 <div style="margin-top: 2rem;">
                     <button class="cta-button" id="nextButton" onclick="nextQuestion()" style="display: none;">
                         Siguiente Pregunta
@@ -538,38 +538,38 @@
         <h2 style="text-align: center; color: white; font-size: 2.5rem; margin-bottom: 1rem;">
             ¿Por qué elegir Aprobado.express?
         </h2>
-
+        
         <div class="features-grid">
             <div class="feature-card glass">
                 <div class="feature-icon">🧠</div>
                 <h3>Aprendizaje Inteligente</h3>
                 <p>Sistema adaptativo que identifica tus áreas débiles y personaliza el contenido para maximizar tu aprendizaje.</p>
             </div>
-
+            
             <div class="feature-card glass">
                 <div class="feature-icon">📊</div>
                 <h3>Estadísticas Detalladas</h3>
                 <p>Seguimiento completo de tu progreso con análisis detallado de rendimiento por categorías.</p>
             </div>
-
+            
             <div class="feature-card glass">
                 <div class="feature-icon">🏆</div>
                 <h3>Sistema Gamificado</h3>
                 <p>Logros, niveles, rachas y rankings que hacen el estudio adictivo y motivador.</p>
             </div>
-
+            
             <div class="feature-card glass">
                 <div class="feature-icon">📱</div>
                 <h3>Multiplataforma</h3>
                 <p>Estudia desde cualquier dispositivo. Tu progreso se sincroniza automáticamente.</p>
             </div>
-
+            
             <div class="feature-card glass">
                 <div class="feature-icon">⚡</div>
                 <h3>Modo Examen Real</h3>
                 <p>Simula las condiciones exactas del examen oficial con tiempo límite y presión real.</p>
             </div>
-
+            
             <div class="feature-card glass">
                 <div class="feature-icon">✅</div>
                 <h3>99% de Aprobados</h3>
@@ -583,10 +583,10 @@
         <div class="premium-modal glass">
             <button class="close-modal" onclick="hidePremium()">&times;</button>
             <h3>🚀 Desbloquea Todo el Potencial</h3>
-
+            
             <div class="price-highlight">€24.99</div>
             <p style="color: #666; margin-bottom: 2rem;">Pago único - Acceso de por vida</p>
-
+            
             <ul class="premium-features">
                 <li>Acceso a todas las 1000+ preguntas oficiales</li>
                 <li>Explicaciones detalladas con imágenes</li>
@@ -597,11 +597,11 @@
                 <li>Actualizaciones gratuitas de por vida</li>
                 <li>Garantía de aprobado o reembolso</li>
             </ul>
-
+            
             <button class="cta-button" onclick="handlePurchaseClick(event)" style="width: 100%; margin-top: 1rem;">
                 💳 Comprar Acceso Premium
             </button>
-
+            
             <p style="color: #999; font-size: 0.9rem; margin-top: 1rem;">
                 Pago seguro procesado por Stripe
             </p>
@@ -615,7 +615,7 @@
                 question: "¿Qué significa esta señal circular con borde rojo y fondo blanco con una bicicleta?",
                 answers: [
                     "Prohibido el paso a bicicletas",
-                    "Carril bici obligatorio",
+                    "Carril bici obligatorio", 
                     "Precaución ciclistas",
                     "Zona de bicicletas"
                 ],
@@ -627,7 +627,7 @@
                 answers: [
                     "120 km/h",
                     "100 km/h",
-                    "90 km/h",
+                    "90 km/h", 
                     "110 km/h"
                 ],
                 correct: 0,
@@ -659,7 +659,7 @@
                 question: "Una señal triangular con borde rojo indica:",
                 answers: [
                     "Peligro",
-                    "Prohibición",
+                    "Prohibición", 
                     "Obligación",
                     "Información"
                 ],
@@ -674,15 +674,15 @@
         let selectedAnswer = null;
         let quizCompleted = false;
 
-        // Stripe Configuration
+        // Stripe Configuration - CLAVE CORREGIDA
         const stripe = Stripe('pk_live_51Rqf4z0onb4SjYDIHfyAJJNbUK7xEgWIP6NsZnAPtv7HY6HvhsI8M08bOexKvMY5wacjTcVFJHf6MowEZkF3gKI2001CPmCSRf');
 
-        // ===== NUEVA FUNCIONALIDAD: CHECKOUT CON REDIRECCIÓN AL DASHBOARD =====
-
-        // Función para manejar el click del botón de compra
+        // ===== FUNCIONALIDAD CHECKOUT CORREGIDA =====
+        
+        // Función para manejar el click del botón de compra - CORREGIDA
         async function handlePurchaseClick(event) {
             event.preventDefault();
-
+            
             // Mostrar confirmación
             const confirmPurchase = confirm(
                 '¿Confirmas tu compra del acceso premium a Aprobado.express por €24.99?\n\n' +
@@ -692,9 +692,9 @@
                 '✅ Sistema de progreso gamificado\n' +
                 '✅ Acceso de por vida'
             );
-
+            
             if (!confirmPurchase) return;
-
+            
             try {
                 // Mostrar loading en el botón
                 const button = event.target;
@@ -702,22 +702,18 @@
                 button.textContent = 'Procesando...';
                 button.disabled = true;
 
-                // Redirigir a Stripe Checkout con URLs actualizadas
+                // Redirigir a Stripe Checkout - PARÁMETROS CORREGIDOS
                 const { error } = await stripe.redirectToCheckout({
                     lineItems: [{
-                        price: 'price_1RtOvw0onb4SjYDIbMYA68qY', // Aprobado.express price ID
+                        price: 'price_1RtOvw0onb4SjYDIbMYA68qY',
                         quantity: 1,
                     }],
                     mode: 'payment',
                     successUrl: 'https://aprobado.express/dashboard?session_id={CHECKOUT_SESSION_ID}&success=true',
                     cancelUrl: 'https://aprobado.express?canceled=true',
-                    billingAddressCollection: 'required',
-                    customerCreation: 'always',
-                    allowPromotionCodes: false,
-                    metadata: {
-                        product: 'aprobado_express_premium',
-                        access_type: 'lifetime'
-                    }
+                    billingAddressCollection: 'required'
+                    // REMOVIDOS PARÁMETROS QUE CAUSABAN ERROR:
+                    // customerCreation, allowPromotionCodes, metadata
                 });
 
                 if (error) {
@@ -727,10 +723,12 @@
             } catch (error) {
                 console.error('Error:', error);
                 showNotification('Error al procesar el pago. Por favor, inténtalo de nuevo.', 'error');
-
-                // Restaurar botón
-                button.textContent = originalText;
-                button.disabled = false;
+                
+                // Restaurar botón - CORREGIDO
+                if (event && event.target) {
+                    event.target.textContent = '💳 Comprar Acceso Premium';
+                    event.target.disabled = false;
+                }
             }
         }
 
@@ -740,7 +738,7 @@
             notification.className = `notification ${type}`;
             notification.textContent = message;
             document.body.appendChild(notification);
-
+            
             // Remover después de 5 segundos
             setTimeout(() => {
                 notification.remove();
@@ -752,7 +750,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             if (urlParams.get('canceled') === 'true') {
                 showNotification('❌ Pago cancelado. Puedes intentarlo de nuevo cuando quieras.', 'error');
-
+                
                 // Limpiar URL
                 window.history.replaceState({}, document.title, window.location.pathname);
             }
@@ -776,10 +774,10 @@
 
             const question = freeQuestions[currentQuestionIndex];
             document.getElementById('questionText').textContent = question.question;
-
+            
             const answersGrid = document.getElementById('answersGrid');
             answersGrid.innerHTML = '';
-
+            
             question.answers.forEach((answer, index) => {
                 const answerDiv = document.createElement('div');
                 answerDiv.className = 'answer-option';
@@ -798,7 +796,7 @@
             selectedAnswer = answerIndex;
             const question = freeQuestions[currentQuestionIndex];
             const answerOptions = document.querySelectorAll('.answer-option');
-
+            
             answerOptions.forEach((option, index) => {
                 if (index === question.correct) {
                     option.classList.add('correct');
@@ -830,7 +828,7 @@
 
         function nextQuestion() {
             currentQuestionIndex++;
-
+            
             if (currentQuestionIndex >= freeQuestions.length) {
                 showQuizComplete();
             } else if (currentQuestionIndex >= 3) {
@@ -855,7 +853,7 @@
         function showQuizComplete() {
             const percentage = (userScore / freeQuestions.length) * 100;
             const passed = percentage >= 90;
-
+            
             document.getElementById('questionCard').innerHTML = `
                 <div style="text-align: center; padding: 2rem;">
                     <div style="font-size: 4rem; margin-bottom: 1rem;">
@@ -868,7 +866,7 @@
                         ${userScore}/${freeQuestions.length} (${percentage.toFixed(0)}%)
                     </div>
                     <p style="color: #666; margin-bottom: 2rem;">
-                        ${passed ?
+                        ${passed ? 
                             'Has superado el límite del 90%. ¡Estás listo para el examen oficial!' :
                             'Necesitas al menos 90% para aprobar. ¡Practica más con la versión premium!'
                         }
@@ -960,7 +958,7 @@
                     showPremium();
                 });
             }
-
+            
             // Configurar cualquier otro botón de compra
             const allPurchaseButtons = document.querySelectorAll('[data-action="purchase"]');
             allPurchaseButtons.forEach(button => {

@@ -1,1 +1,49 @@
-
+{
+  "version": 2,
+  "functions": {
+    "api/**/*.js": {
+      "runtime": "@vercel/node",
+      "maxDuration": 30
+    },
+    "api/webhook/stripe.js": {
+      "maxDuration": 30
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/api/aprobado/(.*)",
+      "destination": "/api/aprobado/$1"
+    },
+    {
+      "source": "/api/ciudadania/(.*)", 
+      "destination": "/api/ciudadania/$1"
+    },
+    {
+      "source": "/api/lifeinuk/(.*)",
+      "destination": "/api/lifeinuk/$1"
+    },
+    {
+      "source": "/api/webhook/(.*)",
+      "destination": "/api/webhook/$1"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "Content-Type, Authorization"
+        }
+      ]
+    }
+  ]
+}

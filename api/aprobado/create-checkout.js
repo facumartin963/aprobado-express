@@ -27,11 +27,11 @@ export default async function handler(req, res) {
             });
         }
         
-        // Product price mapping
+        // Product price mapping - PRICE IDS CORREGIDOS
         const priceIds = {
-            'aprobado': 'price_1QQaLhP1jZOZUKXSzxHVQOkQ',
-            'ciudadania': 'price_1QQaLiP1jZOZUKXS3DvQpMcY', 
-            'lifeinuk': 'price_1QQaLjP1jZOZUKXSyBcNvXlM'
+            'aprobado': 'price_1RtOvw0onb4SjYDIbMYA68qY',
+            'ciudadania': 'price_1RtOzG0onb4SjYDIB6aqnLh6', 
+            'lifeinuk': 'price_1RtOyA0onb4SjYDIdMAvznQ8'
         };
         
         const priceId = priceIds[product];

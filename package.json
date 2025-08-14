@@ -1,0 +1,40 @@
+{
+  "name": "aprobado-express-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Backend para simuladores de exámenes - Aprobado, Ciudadanía y Life in UK",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'No build step required'",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "mysql2": "^3.6.0",
+    "stripe": "^14.0.0",
+    "cors": "^2.8.5",
+    "nodemailer": "^6.9.0"
+  },
+  "devDependencies": {
+    "@vercel/node": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/facumartin963/aprobado-express.git"
+  },
+  "keywords": [
+    "exam",
+    "simulator", 
+    "spain",
+    "uk",
+    "driving",
+    "citizenship",
+    "stripe",
+    "vercel"
+  ],
+  "author": "Cyberix Ltd",
+  "license": "MIT"
+}

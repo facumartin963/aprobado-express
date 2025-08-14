@@ -1,24 +1,5 @@
 {
   "version": 2,
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "nodejs18.x"
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/api/aprobado/(.*)",
-      "destination": "/api/aprobado/$1"
-    },
-    {
-      "source": "/api/ciudadania/(.*)", 
-      "destination": "/api/ciudadania/$1"
-    },
-    {
-      "source": "/api/lifeinuk/(.*)",
-      "destination": "/api/lifeinuk/$1"
-    }
-  ],
   "headers": [
     {
       "source": "/api/(.*)",

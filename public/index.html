@@ -1,1 +1,504 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aprobado.express - Aprueba tu Examen de Conducir a la Primera</title>
+    <meta name="description" content="Simulador oficial del examen de conducir España. 40 preguntas reales, práctica ilimitada por solo €24.99. ¡Aprueba a la primera!">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header */
+        .header {
+            padding: 20px 0;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 100px 0;
+            text-align: center;
+            color: white;
+        }
+        
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            line-height: 1.2;
+        }
+        
+        .hero .highlight {
+            color: #FFD700;
+            text-shadow: 2px 2px 4px rgba(255, 215, 0, 0.3);
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 20px 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .price {
+            font-size: 2rem;
+            margin: 20px 0;
+            color: #FFD700;
+        }
+        
+        .original-price {
+            text-decoration: line-through;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 100px 0;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: 60px;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            color: #FFD700;
+            margin-bottom: 20px;
+        }
+        
+        .feature-card h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+        
+        .feature-card p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 0;
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+        
+        .testimonial {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .testimonial-text {
+            color: white;
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .testimonial-author {
+            color: #FFD700;
+            font-weight: bold;
+        }
+        
+        .stars {
+            color: #FFD700;
+            margin-bottom: 15px;
+        }
+        
+        /* Pricing */
+        .pricing {
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .pricing-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 60px 40px;
+            margin: 0 auto;
+            max-width: 500px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .pricing-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+        }
+        
+        .plan-name {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+        
+        .plan-price {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #FFD700;
+            margin-bottom: 10px;
+        }
+        
+        .plan-period {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin-bottom: 40px;
+        }
+        
+        .plan-features li {
+            color: white;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .plan-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .plan-features i {
+            color: #4ECDC4;
+            margin-right: 10px;
+        }
+        
+        /* Loading Overlay */
+        .loading-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .loading-spinner {
+            color: white;
+            font-size: 2rem;
+        }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="#" class="logo">
+                    <i class="fas fa-car"></i> Aprobado.express
+                </a>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Aprueba tu Examen de Conducir <span class="highlight">a la Primera</span></h1>
+            <p>Simulador oficial con preguntas reales del examen teórico. Practica sin límites y garantiza tu aprobado.</p>
+            
+            <div class="price">
+                <span class="original-price">€49.99</span>
+                <strong>€24.99</strong>
+            </div>
+            
+            <button class="cta-button" onclick="startCheckout()">
+                <i class="fas fa-rocket"></i> Acceder Ahora - €24.99
+            </button>
+            
+            <p style="margin-top: 20px; font-size: 0.9rem; opacity: 0.8;">
+                <i class="fas fa-shield-alt"></i> Pago seguro con Stripe • 
+                <i class="fas fa-mobile-alt"></i> Acceso inmediato • 
+                <i class="fas fa-infinity"></i> Práctica ilimitada
+            </p>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <h2 class="section-title">¿Por qué elegir Aprobado.express?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>Preguntas Oficiales</h3>
+                    <p>40 preguntas reales del examen oficial de la DGT. Actualizadas según la normativa vigente 2024.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-infinity"></i>
+                    </div>
+                    <h3>Práctica Ilimitada</h3>
+                    <p>Acceso de por vida. Practica cuantas veces quieras hasta sentirte 100% preparado.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Simulacro Real</h3>
+                    <p>Examen cronometrado igual que el oficial. 20 minutos, 30 preguntas, 80% para aprobar.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Multi-dispositivo</h3>
+                    <p>Practica desde cualquier lugar: móvil, tablet o ordenador. Acceso inmediato 24/7.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Seguimiento Progreso</h3>
+                    <p>Estadísticas detalladas de tu evolución. Identifica áreas de mejora fácilmente.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Explicaciones Detalladas</h3>
+                    <p>Cada pregunta incluye explicación clara del por qué es correcta o incorrecta.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="container">
+            <h2 class="section-title">Lo que dicen nuestros estudiantes</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Aprobé a la primera gracias a este simulador. Las preguntas son exactamente como en el examen real. ¡Totalmente recomendado!"</p>
+                    <p class="testimonial-author">- María González, Madrid</p>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Había suspendido dos veces antes. Con Aprobado.express practiqué durante una semana y aprobé con 27/30. ¡Increíble!"</p>
+                    <p class="testimonial-author">- Carlos Ruiz, Barcelona</p>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"La mejor inversión que hice. €24.99 vs €300 que me costaron los suspensos anteriores. Funciona de verdad."</p>
+                    <p class="testimonial-author">- Ana Martín, Valencia</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing -->
+    <section class="pricing">
+        <div class="container">
+            <h2 class="section-title">Una inversión que vale la pena</h2>
+            <div class="pricing-card">
+                <h3 class="plan-name">Acceso Completo</h3>
+                <div class="plan-price">€24.99</div>
+                <p class="plan-period">Pago único • Acceso de por vida</p>
+                
+                <ul class="plan-features">
+                    <li><i class="fas fa-check"></i> 40 preguntas oficiales DGT</li>
+                    <li><i class="fas fa-check"></i> Práctica ilimitada</li>
+                    <li><i class="fas fa-check"></i> Simulacros cronometrados</li>
+                    <li><i class="fas fa-check"></i> Explicaciones detalladas</li>
+                    <li><i class="fas fa-check"></i> Estadísticas de progreso</li>
+                    <li><i class="fas fa-check"></i> Acceso multi-dispositivo</li>
+                    <li><i class="fas fa-check"></i> Actualizaciones incluidas</li>
+                </ul>
+                
+                <button class="cta-button" onclick="startCheckout()">
+                    <i class="fas fa-credit-card"></i> Comprar Ahora
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="loading-spinner">
+            <i class="fas fa-spinner fa-spin"></i>
+            <p style="margin-top: 20px;">Procesando pago...</p>
+        </div>
+    </div>
 
+    <script>
+        // Checkout Function
+        async function startCheckout() {
+            const email = prompt('Introduce tu email para continuar:');
+            
+            if (!email || !isValidEmail(email)) {
+                alert('Por favor, introduce un email válido.');
+                return;
+            }
+            
+            // Show loading
+            document.getElementById('loadingOverlay').style.display = 'flex';
+            
+            try {
+                const response = await fetch('/api/aprobado/create-checkout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        product: 'aprobado'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Redirect to Stripe Checkout
+                    window.location.href = data.checkout_url;
+                } else {
+                    alert('Error al procesar el pago: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error de conexión. Por favor, inténtalo de nuevo.');
+            } finally {
+                // Hide loading
+                document.getElementById('loadingOverlay').style.display = 'none';
+            }
+        }
+        
+        // Email validation
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    </script>
+</body>
+</html>

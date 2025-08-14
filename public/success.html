@@ -1,1 +1,248 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>¡Pago Exitoso! - Aprobado.express</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .success-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        
+        .success-icon {
+            font-size: 5rem;
+            color: #4ECDC4;
+            margin-bottom: 30px;
+            animation: bounce 1s ease-in-out;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 60%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            80% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .success-title {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .success-message {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .info-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: left;
+        }
+        
+        .info-box h3 {
+            color: #FFD700;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-box p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .access-info {
+            background: linear-gradient(45deg, rgba(76, 175, 80, 0.2), rgba(76, 175, 80, 0.1));
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        
+        .next-steps {
+            background: linear-gradient(45deg, rgba(255, 193, 7, 0.2), rgba(255, 193, 7, 0.1));
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 20px 10px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+        
+        .features-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .features-list li {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .features-list li i {
+            color: #4ECDC4;
+            width: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .success-container {
+                padding: 40px 20px;
+            }
+            
+            .success-title {
+                font-size: 2rem;
+            }
+            
+            .success-message {
+                font-size: 1rem;
+            }
+            
+            .cta-button {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="success-icon">
+            <i class="fas fa-check-circle"></i>
+        </div>
+        
+        <h1 class="success-title">¡Pago Exitoso!</h1>
+        
+        <p class="success-message">
+            Tu compra se ha procesado correctamente. Ya tienes acceso completo al simulador de examen de conducir.
+        </p>
+        
+        <div class="info-box access-info">
+            <h3>
+                <i class="fas fa-key"></i>
+                Acceso Inmediato
+            </h3>
+            <p><strong>✅ Tu cuenta está activa</strong></p>
+            <p>Puedes empezar a practicar inmediatamente. No necesitas esperar ningún email de confirmación.</p>
+        </div>
+        
+        <div class="info-box next-steps">
+            <h3>
+                <i class="fas fa-rocket"></i>
+                ¿Qué incluye tu acceso?
+            </h3>
+            <ul class="features-list">
+                <li><i class="fas fa-check"></i> 40 preguntas oficiales de la DGT</li>
+                <li><i class="fas fa-check"></i> Simulacros cronometrados ilimitados</li>
+                <li><i class="fas fa-check"></i> Explicaciones detalladas de cada respuesta</li>
+                <li><i class="fas fa-check"></i> Estadísticas de progreso personal</li>
+                <li><i class="fas fa-check"></i> Acceso de por vida, sin renovaciones</li>
+                <li><i class="fas fa-check"></i> Compatible con móvil, tablet y ordenador</li>
+            </ul>
+        </div>
+        
+        <div style="margin: 40px 0;">
+            <a href="/dashboard" class="cta-button">
+                <i class="fas fa-play"></i> Empezar a Practicar
+            </a>
+            
+            <a href="/" class="cta-button btn-secondary">
+                <i class="fas fa-home"></i> Volver al Inicio
+            </a>
+        </div>
+        
+        <div class="info-box">
+            <h3>
+                <i class="fas fa-envelope"></i>
+                Información Importante
+            </h3>
+            <p><strong>📧 Recibirás un email</strong> con tu link de acceso personalizado en los próximos minutos.</p>
+            <p><strong>🔖 Guarda este link</strong> para acceder siempre que quieras practicar.</p>
+            <p><strong>💡 Consejo:</strong> Practica 10-15 minutos diarios para obtener mejores resultados.</p>
+        </div>
+        
+        <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.2);">
+            <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">
+                <i class="fas fa-headset"></i> 
+                ¿Necesitas ayuda? Contacta con nuestro soporte técnico
+            </p>
+        </div>
+    </div>
 
+    <script>
+        // Auto-redirect to dashboard after 5 seconds if session_id is present
+        const urlParams = new URLSearchParams(window.location.search);
+        const sessionId = urlParams.get('session_id');
+        
+        if (sessionId) {
+            // Here you would typically call your webhook to create user account
+            console.log('Payment session:', sessionId);
+            
+            // Auto-redirect after 5 seconds
+            setTimeout(() => {
+                window.location.href = '/dashboard';
+            }, 5000);
+        }
+    </script>
+</body>
+</html>

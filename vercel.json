@@ -1,27 +1,4 @@
 {
-  "functions": {
-    "api/**/*.js": {
-      "runtime": "@vercel/node@18"
-    }
-  },
-  "rewrites": [
-    {
-      "source": "/",
-      "destination": "/public/index.html"
-    },
-    {
-      "source": "/dashboard",
-      "destination": "/public/dashboard.html"
-    },
-    {
-      "source": "/success",
-      "destination": "/public/success.html"
-    },
-    {
-      "source": "/cancel",
-      "destination": "/public/cancel.html"
-    }
-  ],
   "headers": [
     {
       "source": "/api/(.*)",

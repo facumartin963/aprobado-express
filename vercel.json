@@ -2,11 +2,7 @@
   "version": 2,
   "functions": {
     "api/**/*.js": {
-      "runtime": "@vercel/node",
-      "maxDuration": 30
-    },
-    "api/webhook/stripe.js": {
-      "maxDuration": 30
+      "runtime": "nodejs18.x"
     }
   },
   "rewrites": [
@@ -21,10 +17,6 @@
     {
       "source": "/api/lifeinuk/(.*)",
       "destination": "/api/lifeinuk/$1"
-    },
-    {
-      "source": "/api/webhook/(.*)",
-      "destination": "/api/webhook/$1"
     }
   ],
   "headers": [

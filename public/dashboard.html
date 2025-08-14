@@ -1,1 +1,625 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Aprobado.express</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-align: center;
+        }
+        
+        .header h1 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .header p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.1rem;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        
+        .card-icon {
+            font-size: 3rem;
+            color: #FFD700;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .card h3 {
+            color: white;
+            font-size: 1.4rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .card p {
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #FFD700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 0.9rem;
+        }
+        
+        .exam-container {
+            display: none;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+        
+        .question-counter {
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        
+        .timer {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #FFD700;
+        }
+        
+        .question-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .question-text {
+            color: white;
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+        
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 12px;
+            padding: 15px 20px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1rem;
+        }
+        
+        .option:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #4ECDC4;
+        }
+        
+        .option.selected {
+            background: linear-gradient(45deg, #4ECDC4, #44A08D);
+            border-color: #4ECDC4;
+            transform: translateX(5px);
+        }
+        
+        .exam-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+        
+        .progress-bar {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            height: 8px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            background: linear-gradient(45deg, #4ECDC4, #44A08D);
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+            width: 0%;
+        }
+        
+        .results-container {
+            display: none;
+            text-align: center;
+            color: white;
+        }
+        
+        .results-score {
+            font-size: 4rem;
+            font-weight: bold;
+            color: #FFD700;
+            margin: 20px 0;
+        }
+        
+        .results-message {
+            font-size: 1.5rem;
+            margin: 20px 0;
+        }
+        
+        .results-details {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 20px 0;
+        }
+        
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .exam-controls {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1><i class="fas fa-car"></i> Aprobado.express</h1>
+            <p>Dashboard del Simulador - ¡Bienvenido!</p>
+        </div>
+        
+        <!-- Dashboard -->
+        <div id="dashboard" class="dashboard">
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+                <h3>Examen Completo</h3>
+                <p>Practica con un examen oficial de 20 preguntas. Tienes 20 minutos para completarlo.</p>
+                <button class="btn" onclick="startExam('complete')">
+                    <i class="fas fa-rocket"></i> Comenzar Examen
+                </button>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-dumbbell"></i>
+                </div>
+                <h3>Práctica Rápida</h3>
+                <p>Modo entrenamiento con 10 preguntas aleatorias. Perfecto para repasar conceptos.</p>
+                <button class="btn btn-secondary" onclick="startExam('practice')">
+                    <i class="fas fa-brain"></i> Practicar
+                </button>
+            </div>
+            
+            <div class="card">
+                <div class="card-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Mis Estadísticas</h3>
+                <p>Revisa tu progreso, puntuaciones y áreas de mejora.</p>
+                <button class="btn btn-secondary" onclick="showStats()">
+                    <i class="fas fa-analytics"></i> Ver Estadísticas
+                </button>
+            </div>
+        </div>
+        
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalExams">0</div>
+                <div class="stat-label">Exámenes Realizados</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="averageScore">0%</div>
+                <div class="stat-label">Puntuación Media</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="passRate">0%</div>
+                <div class="stat-label">Tasa de Aprobado</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalQuestions">40</div>
+                <div class="stat-label">Preguntas Disponibles</div>
+            </div>
+        </div>
+        
+        <!-- Exam Container -->
+        <div id="examContainer" class="exam-container">
+            <div class="question-header">
+                <div class="question-counter">
+                    Pregunta <span id="currentQuestion">1</span> de <span id="totalQuestionsCount">20</span>
+                </div>
+                <div class="timer">
+                    <i class="fas fa-clock"></i> <span id="timeRemaining">20:00</span>
+                </div>
+            </div>
+            
+            <div class="progress-bar">
+                <div id="progressFill" class="progress-fill"></div>
+            </div>
+            
+            <div id="questionCard" class="question-card">
+                <div id="questionText" class="question-text">
+                    Cargando pregunta...
+                </div>
+                <div id="questionImage" style="text-align: center; margin: 20px 0;"></div>
+                <div id="optionsContainer" class="options">
+                    <!-- Options will be inserted here -->
+                </div>
+            </div>
+            
+            <div class="exam-controls">
+                <button id="prevBtn" class="btn btn-secondary" onclick="previousQuestion()" disabled>
+                    <i class="fas fa-arrow-left"></i> Anterior
+                </button>
+                <button id="nextBtn" class="btn" onclick="nextQuestion()">
+                    Siguiente <i class="fas fa-arrow-right"></i>
+                </button>
+                <button id="finishBtn" class="btn" onclick="finishExam()" style="display: none;">
+                    <i class="fas fa-flag-checkered"></i> Finalizar
+                </button>
+            </div>
+        </div>
+        
+        <!-- Results Container -->
+        <div id="resultsContainer" class="results-container">
+            <h2>¡Examen Completado!</h2>
+            <div id="resultsScore" class="results-score">85%</div>
+            <div id="resultsMessage" class="results-message">¡Felicitaciones! Has aprobado</div>
+            
+            <div class="results-details">
+                <h3>Detalles del Examen</h3>
+                <p><strong>Respuestas correctas:</strong> <span id="correctAnswers">17</span> de <span id="totalAnswers">20</span></p>
+                <p><strong>Tiempo empleado:</strong> <span id="timeUsed">15:30</span></p>
+                <p><strong>Puntuación mínima:</strong> 80%</p>
+            </div>
+            
+            <button class="btn" onclick="backToDashboard()">
+                <i class="fas fa-home"></i> Volver al Dashboard
+            </button>
+        </div>
+    </div>
 
+    <script>
+        // Global variables
+        let currentExam = null;
+        let questions = [];
+        let currentQuestionIndex = 0;
+        let answers = [];
+        let examStartTime = null;
+        let timerInterval = null;
+        let examType = 'complete';
+        let userToken = null;
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get token from URL parameters
+            const urlParams = new URLSearchParams(window.location.search);
+            userToken = urlParams.get('token') || 'demo_token_aprobado_2024';
+            
+            loadStats();
+        });
+        
+        // Load user statistics
+        async function loadStats() {
+            try {
+                const response = await fetch(`/api/aprobado/validate-access?token=${userToken}`);
+                const data = await response.json();
+                
+                if (data.success && data.valid) {
+                    console.log('User validated:', data.user);
+                } else {
+                    alert('Token de acceso inválido. Por favor, contacta con soporte.');
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+        
+        // Start exam
+        async function startExam(type = 'complete') {
+            examType = type;
+            const questionCount = type === 'complete' ? 20 : 10;
+            
+            try {
+                showLoading('Cargando preguntas...');
+                
+                const response = await fetch(`/api/aprobado/get-questions?token=${userToken}&limit=${questionCount}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    questions = data.questions;
+                    currentQuestionIndex = 0;
+                    answers = new Array(questions.length).fill(null);
+                    examStartTime = new Date();
+                    
+                    document.getElementById('dashboard').style.display = 'none';
+                    document.getElementById('examContainer').style.display = 'block';
+                    document.getElementById('resultsContainer').style.display = 'none';
+                    
+                    document.getElementById('totalQuestionsCount').textContent = questions.length;
+                    
+                    startTimer(type === 'complete' ? 20 * 60 : 10 * 60); // 20 or 10 minutes
+                    displayQuestion();
+                    
+                } else {
+                    alert('Error cargando preguntas: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Error starting exam:', error);
+                alert('Error de conexión. Por favor, inténtalo de nuevo.');
+            }
+        }
+        
+        // Display current question
+        function displayQuestion() {
+            const question = questions[currentQuestionIndex];
+            
+            document.getElementById('currentQuestion').textContent = currentQuestionIndex + 1;
+            document.getElementById('questionText').textContent = question.question_text;
+            
+            // Handle image if present
+            const imageContainer = document.getElementById('questionImage');
+            if (question.image_url) {
+                imageContainer.innerHTML = `<img src="${question.image_url}" alt="Imagen de la pregunta" style="max-width: 100%; height: auto; border-radius: 10px;">`;
+            } else {
+                imageContainer.innerHTML = '';
+            }
+            
+            // Create options
+            const optionsContainer = document.getElementById('optionsContainer');
+            optionsContainer.innerHTML = '';
+            
+            const options = [
+                { text: question.option_a, value: 0 },
+                { text: question.option_b, value: 1 },
+                { text: question.option_c, value: 2 }
+            ];
+            
+            options.forEach((option, index) => {
+                if (option.text) {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'option';
+                    optionElement.textContent = `${String.fromCharCode(65 + index)}. ${option.text}`;
+                    optionElement.onclick = () => selectOption(index, optionElement);
+                    
+                    if (answers[currentQuestionIndex] === index) {
+                        optionElement.classList.add('selected');
+                    }
+                    
+                    optionsContainer.appendChild(optionElement);
+                }
+            });
+            
+            // Update progress
+            const progress = ((currentQuestionIndex + 1) / questions.length) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            
+            // Update navigation buttons
+            document.getElementById('prevBtn').disabled = currentQuestionIndex === 0;
+            document.getElementById('nextBtn').style.display = currentQuestionIndex === questions.length - 1 ? 'none' : 'block';
+            document.getElementById('finishBtn').style.display = currentQuestionIndex === questions.length - 1 ? 'block' : 'none';
+        }
+        
+        // Select an option
+        function selectOption(optionIndex, optionElement) {
+            // Remove previous selection
+            document.querySelectorAll('.option').forEach(opt => opt.classList.remove('selected'));
+            
+            // Add selection to clicked option
+            optionElement.classList.add('selected');
+            
+            // Store answer
+            answers[currentQuestionIndex] = optionIndex;
+        }
+        
+        // Navigation functions
+        function nextQuestion() {
+            if (currentQuestionIndex < questions.length - 1) {
+                currentQuestionIndex++;
+                displayQuestion();
+            }
+        }
+        
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                displayQuestion();
+            }
+        }
+        
+        // Timer functions
+        function startTimer(seconds) {
+            let timeRemaining = seconds;
+            
+            timerInterval = setInterval(() => {
+                const minutes = Math.floor(timeRemaining / 60);
+                const secs = timeRemaining % 60;
+                
+                document.getElementById('timeRemaining').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+                
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    finishExam();
+                }
+                
+                timeRemaining--;
+            }, 1000);
+        }
+        
+        // Finish exam
+        function finishExam() {
+            clearInterval(timerInterval);
+            
+            const examEndTime = new Date();
+            const timeSpent = Math.floor((examEndTime - examStartTime) / 1000);
+            
+            // Calculate results
+            let correctCount = 0;
+            
+            questions.forEach((question, index) => {
+                if (answers[index] === question.correct_answer) {
+                    correctCount++;
+                }
+            });
+            
+            const score = Math.round((correctCount / questions.length) * 100);
+            const passed = score >= 80;
+            
+            // Display results
+            document.getElementById('examContainer').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'block';
+            
+            document.getElementById('resultsScore').textContent = score + '%';
+            document.getElementById('resultsMessage').textContent = passed ? 
+                '¡Felicitaciones! Has aprobado' : 
+                'No has alcanzado la nota mínima. ¡Sigue practicando!';
+            
+            document.getElementById('correctAnswers').textContent = correctCount;
+            document.getElementById('totalAnswers').textContent = questions.length;
+            
+            const minutes = Math.floor(timeSpent / 60);
+            const seconds = timeSpent % 60;
+            document.getElementById('timeUsed').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // Back to dashboard
+        function backToDashboard() {
+            document.getElementById('dashboard').style.display = 'grid';
+            document.getElementById('examContainer').style.display = 'none';
+            document.getElementById('resultsContainer').style.display = 'none';
+        }
+        
+        // Show statistics
+        function showStats() {
+            alert('Estadísticas detalladas próximamente disponibles!');
+        }
+        
+        // Utility functions
+        function showLoading(message) {
+            console.log(message);
+        }
+    </script>
+</body>
+</html>

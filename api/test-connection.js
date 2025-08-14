@@ -1,8 +1,8 @@
-// api/test-connection.js - Endpoint para testing de conexiones
+// api/test-connection.js - Endpoint para testing CommonJS
 
-import { Database } from '../lib/database.js';
+const { Database } = require('../lib/database.js');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
   // CORS headers
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
@@ -19,11 +19,12 @@ export default async function handler(req, res) {
   const results = {};
   const projects = ['aprobado', 'ciudadania', 'lifeinuk'];
 
-  console.log('Testing database connections...');
+  console.log('🔍 Testing database connections from Vercel...');
+  console.log('🌍 Region:', process.env.VERCEL_REGION);
 
   for (const project of projects) {
     try {
-      console.log(`Testing ${project}...`);
+      console.log(`🔌 Testing ${project}...`);
       const db = new Database(project);
       
       // Test básico de conexión
@@ -50,7 +51,8 @@ export default async function handler(req, res) {
     } catch (error) {
       results[project] = {
         status: 'error',
-        error: error.message
+        error: error.message,
+        stack: error.stack
       };
       console.log(`💥 ${project}: ${error.message}`);
     }
@@ -59,7 +61,9 @@ export default async function handler(req, res) {
   // Verificar variables de entorno
   const envCheck = {
     STRIPE_SECRET_KEY: !!process.env.STRIPE_SECRET_KEY,
-    STRIPE_WEBHOOK_SECRET: !!process.env.STRIPE_WEBHOOK_SECRET
+    STRIPE_WEBHOOK_SECRET: !!process.env.STRIPE_WEBHOOK_SECRET,
+    NODE_ENV: process.env.NODE_ENV,
+    VERCEL_REGION: process.env.VERCEL_REGION
   };
 
   const response = {
@@ -73,10 +77,15 @@ export default async function handler(req, res) {
       connected: Object.values(results).filter(r => r.status === 'connected').length,
       total_questions: Object.values(results).reduce((sum, r) => sum + (r.questions || 0), 0),
       total_users: Object.values(results).reduce((sum, r) => sum + (r.users || 0), 0)
+    },
+    debug_info: {
+      vercel_region: process.env.VERCEL_REGION,
+      node_version: process.version,
+      memory_usage: process.memoryUsage()
     }
   };
 
-  console.log('Test completed:', response.summary);
+  console.log('📊 Test completed:', response.summary);
 
   res.status(200).json(response);
-}
+};

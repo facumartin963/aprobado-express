@@ -1,1 +1,294 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago Cancelado - Aprobado.express</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .cancel-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 60px 40px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+        }
+        
+        .cancel-icon {
+            font-size: 5rem;
+            color: #FF6B6B;
+            margin-bottom: 30px;
+        }
+        
+        .cancel-title {
+            color: white;
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .cancel-message {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+        
+        .info-box {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: left;
+        }
+        
+        .info-box h3 {
+            color: #FFD700;
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .info-box p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        
+        .reasons-box {
+            background: linear-gradient(45deg, rgba(255, 193, 7, 0.2), rgba(255, 193, 7, 0.1));
+            border: 1px solid rgba(255, 193, 7, 0.3);
+        }
+        
+        .benefits-box {
+            background: linear-gradient(45deg, rgba(76, 175, 80, 0.2), rgba(76, 175, 80, 0.1));
+            border: 1px solid rgba(76, 175, 80, 0.3);
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #FF6B6B, #4ECDC4);
+            color: white;
+            padding: 18px 40px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin: 20px 10px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+        
+        .btn-secondary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+        }
+        
+        .benefits-list {
+            list-style: none;
+            margin: 20px 0;
+        }
+        
+        .benefits-list li {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 8px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .benefits-list li i {
+            color: #4ECDC4;
+            width: 20px;
+        }
+        
+        .price-highlight {
+            background: linear-gradient(45deg, rgba(255, 107, 107, 0.2), rgba(78, 205, 196, 0.2));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .price-highlight .price {
+            font-size: 2.5rem;
+            color: #FFD700;
+            font-weight: bold;
+        }
+        
+        .original-price {
+            text-decoration: line-through;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .cancel-container {
+                padding: 40px 20px;
+            }
+            
+            .cancel-title {
+                font-size: 2rem;
+            }
+            
+            .cancel-message {
+                font-size: 1rem;
+            }
+            
+            .cta-button {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cancel-container">
+        <div class="cancel-icon">
+            <i class="fas fa-times-circle"></i>
+        </div>
+        
+        <h1 class="cancel-title">Pago Cancelado</h1>
+        
+        <p class="cancel-message">
+            No se ha procesado ningún cargo en tu tarjeta. Puedes intentar nuevamente cuando estés listo.
+        </p>
+        
+        <div class="info-box reasons-box">
+            <h3>
+                <i class="fas fa-question-circle"></i>
+                ¿Por qué elegir Aprobado.express?
+            </h3>
+            <p><strong>💰 Ahorra dinero:</strong> El examen oficial cuesta €25 cada vez. Si suspendes 2 veces, ya perdiste €50.</p>
+            <p><strong>⏰ Ahorra tiempo:</strong> No esperes semanas para la siguiente cita. Practica cuando quieras.</p>
+            <p><strong>✅ Garantía de éxito:</strong> 92% de nuestros estudiantes aprueban a la primera vez.</p>
+        </div>
+        
+        <div class="price-highlight">
+            <div style="color: white; margin-bottom: 10px;">
+                <span class="original-price">€49.99</span>
+                <span class="price">€24.99</span>
+            </div>
+            <p style="color: rgba(255,255,255,0.8); font-size: 0.9rem;">
+                Oferta especial • Pago único • Sin renovaciones
+            </p>
+        </div>
+        
+        <div class="info-box benefits-box">
+            <h3>
+                <i class="fas fa-star"></i>
+                Lo que obtienes por €24.99
+            </h3>
+            <ul class="benefits-list">
+                <li><i class="fas fa-check"></i> 40 preguntas oficiales de la DGT</li>
+                <li><i class="fas fa-check"></i> Simulacros cronometrados ilimitados</li>
+                <li><i class="fas fa-check"></i> Explicaciones detalladas</li>
+                <li><i class="fas fa-check"></i> Acceso de por vida</li>
+                <li><i class="fas fa-check"></i> Compatible con todos los dispositivos</li>
+                <li><i class="fas fa-check"></i> Actualizaciones incluidas</li>
+            </ul>
+        </div>
+        
+        <div style="margin: 40px 0;">
+            <a href="/" class="cta-button" onclick="startCheckout()">
+                <i class="fas fa-credit-card"></i> Intentar de Nuevo - €24.99
+            </a>
+            
+            <a href="/" class="cta-button btn-secondary">
+                <i class="fas fa-home"></i> Volver al Inicio
+            </a>
+        </div>
+        
+        <div class="info-box">
+            <h3>
+                <i class="fas fa-shield-alt"></i>
+                Pago 100% Seguro
+            </h3>
+            <p><strong>🔒 Stripe:</strong> Procesamos pagos con la misma tecnología que usan Netflix, Shopify y Uber.</p>
+            <p><strong>💳 Sin guardado:</strong> No almacenamos información de tu tarjeta.</p>
+            <p><strong>📱 Acceso inmediato:</strong> Una vez pagado, accedes al simulador en segundos.</p>
+        </div>
+        
+        <div style="margin-top: 40px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.2);">
+            <p style="color: rgba(255,255,255,0.7); font-size: 0.9rem;">
+                <i class="fas fa-headset"></i> 
+                ¿Tienes dudas? Contacta con nuestro soporte técnico
+            </p>
+        </div>
+    </div>
 
+    <script>
+        // Checkout Function (same as in index.html)
+        async function startCheckout() {
+            const email = prompt('Introduce tu email para continuar:');
+            
+            if (!email || !isValidEmail(email)) {
+                alert('Por favor, introduce un email válido.');
+                return;
+            }
+            
+            try {
+                const response = await fetch('/api/aprobado/create-checkout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        product: 'aprobado'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Redirect to Stripe Checkout
+                    window.location.href = data.checkout_url;
+                } else {
+                    alert('Error al procesar el pago: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error de conexión. Por favor, inténtalo de nuevo.');
+            }
+        }
+        
+        // Email validation
+        function isValidEmail(email) {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return emailRegex.test(email);
+        }
+    </script>
+</body>
+</html>
